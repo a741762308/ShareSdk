@@ -1,0 +1,145 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.jfrog.bintray'
+
+version = "0.0.1"
+
+group "com.charles.share.sdk"
+
+def gerLibProperties() {
+    try {
+        def libProperties = new Properties()
+        libProperties.load(new FileInputStream('build.properties'))
+        return libProperties
+    } catch (IOException ignored) {
+
+    }
+}
+
+def getLibArtifactId() {
+    Properties libProperties = gerLibProperties()
+    if (libProperties != null) {
+        return libProperties.getProperty("artifactId")
+    }
+    return "111"
+}
+
+def getLibName() {
+    Properties libProperties = gerLibProperties()
+    if (libProperties != null) {
+        return libProperties.getProperty("name")
+    }
+    return "222"
+}
+
+def getLibDescription() {
+    Properties libProperties = gerLibProperties()
+    if (libProperties != null) {
+        return libProperties.getProperty("description")
+    }
+    return "333"
+}
+
+//发布到maven
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo')) //定义本地maven仓库的地址
+
+            pom.project {
+                artifactId = getLibArtifactId()
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
+}
+// 生成sourceJar和javaDocJar构件
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    options.encoding = "UTF-8"
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+def siteUrl = 'https://github.com/a741762308/ShareSdk'
+def gitUrl = 'https://github.com/a741762308/ShareSdk.git'
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        }
+    }
+    developers {
+        developer {
+            id "a741762308"
+            name "a741762308"
+            email "741762308@qq.com"
+        }
+    }
+
+    scm {
+        connection gitUrl
+        developerConnection gitUrl
+        url siteUrl
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            MyPublication(MavenPublication) {
+                from components.release
+                artifact sourcesJar
+                artifact javadocJar
+                groupId group
+                artifactId getLibArtifactId()
+                version version
+                pom.withXml {
+                    def root = asNode()
+                    root.appendNode('url', siteUrl)
+                    root.appendNode('name', getLibName())
+                    root.appendNode('description', getLibDescription())
+                    root.children().last() + pomConfig
+                }
+            }
+        }
+    }
+}
+
+Properties bintrayProperty = new Properties()
+bintrayProperty.load(project.rootProject.file('local.properties').newDataInputStream())
+//发布到jCenter
+bintray {
+    user = bintrayProperty.getProperty("bintray.user")
+    key = bintrayProperty.getProperty("bintray.apikey")
+    publications = ['MyPublication']
+    publish = true
+    pkg {
+        repo = 'maven'
+        name = getLibArtifactId()
+        userOrg = 'a741762308'
+        websiteUrl = siteUrl
+        licenses = ['Apache-2.0']
+        vcsUrl = gitUrl
+    }
+}
+

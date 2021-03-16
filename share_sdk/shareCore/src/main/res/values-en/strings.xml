@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_authorize_share">Can\'t share pictures without authorization</string>
+</resources>
