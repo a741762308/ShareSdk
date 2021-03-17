@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dingding_not_install">钉钉客户端未安装或者版本过低</string>
+</resources>
