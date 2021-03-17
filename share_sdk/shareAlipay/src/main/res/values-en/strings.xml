@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alipay_not_install">AliPay is not installed or too low</string>
+</resources>
