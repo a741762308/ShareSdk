@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qq_not_install">QQ客户端未安装或者版本过低</string>
+    <string name="no_authorize_share_qq">拒绝授权不能进行QQ分享图片</string>
+</resources>

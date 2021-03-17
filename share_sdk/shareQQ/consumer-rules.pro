@@ -1,0 +1,3 @@
+-keep class com.charles.sharesdk.qq.PlatformQQ
+-keep class com.charles.sharesdk.qq.PlatformQQ$QQShareFactory
+-keep class com.charles.sharesdk.qq.PlatformQQ$QQZoneShareFactory

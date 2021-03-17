@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qq_not_install">QQ client not exists or the version is too low</string>
+    <string name="no_authorize_share_qq">Can\'t share pictures to QQ without authorization</string>
+</resources>
