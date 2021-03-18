@@ -4,7 +4,8 @@
 
 ## 背景
 之前一直在使用Mob的ShareSdk，无论是在eclipse时代还是目前的AS。但在AS上时常出现问题，它经常更新而且还下载失败，导致我每次都要用离线模式，影响使用体验。于是ShareSDK插件应运而生。
-
+## 更新日志
+* 支持微信、微博、QQ、支付宝、钉钉登录与分享![release](https://img.shields.io/badge/Release-V0.0.1-blue.svg)
 ## 接入使用
 
 1、project build.gradle
