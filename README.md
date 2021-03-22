@@ -12,7 +12,7 @@
 ```groovy
 dependencies {
     //添加插件
-     classpath "com.charles.share.sdk:share-sdk:0.0.1"
+     classpath "gradle.plugin.com.charles.share.sdk:share-sdk:0.0.1"
 }
 ```
 2、app或lib buil.gradle
