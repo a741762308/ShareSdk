@@ -70,8 +70,7 @@ object ShareImageUtils {
             return null
         }
         try {
-            val imageBitmap: Bitmap
-            imageBitmap = if (imagePath.startsWith("http")) { //网络图片
+            val imageBitmap: Bitmap = if (imagePath.startsWith("http")) { //网络图片
                 BitmapFactory.decodeStream(URL(imagePath).openStream())
             } else {
                 val file = File(imagePath)
